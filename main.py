@@ -6,7 +6,7 @@ app = FastAPI()
 
 # Homepage
 @app.get('/')
-def home():
+def home() -> dict:
     return {"message": "Library API, go to /books to look at available books."}
 
 # DATA
@@ -36,17 +36,17 @@ books = [
 # ROUTES
 # GET: all books
 @app.get('/books')
-def get_books():
+def get_books() -> list[dict]:
     return books
 
 # GET: all users
 @app.get('/users')
-def get_users():
+def get_users() -> list(dict):
     return users
 
 # POST: borrow a book
 @app.post('/borrowbook')
-def borrow_book(user_id: int, book_id: int):
+def borrow_book(user_id: int, book_id: int) -> dict:
     user = next((u for u in users if u["id"] == user_id), None)
     book = next((b for b in books if b["id"] == book_id), None)
     
