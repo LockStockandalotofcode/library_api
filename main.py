@@ -52,7 +52,7 @@ def borrow_book(user_id: int, book_id: int) -> dict:
     
     # raise error if not existing
     if not user or not book:
-        raise HTTPException(status_code=404, detail="User of book does not exist.")
+        raise HTTPException(status_code=404, detail="User or book does not exist.")
 
     if not book["is_available"]:
         raise HTTPException(status_code=400, detail="Book is not available.")
