@@ -2,6 +2,11 @@ venv/
 env/
 .env
 
+.DS_Store          
+*.log              
+data/              
+
+*.pyc              
 __pycache__/
 *.py[cod]
 
