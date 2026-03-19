@@ -7,3 +7,7 @@ class Book(BaseModel):
     author: Optional[str]
     is_available: bool = True
     due_date: Optional[str] = None
+
+class BookInput(BaseModel): # what the client sends
+    title: str
+    author: str
