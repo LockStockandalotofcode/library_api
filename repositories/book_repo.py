@@ -16,4 +16,4 @@ class BookRepository:
             json.dump(json_list, f, indent=2)
 
     def find_book_by_id(self, book_id: int) -> Book | None:
-        return next((b for b in self.load_books() if b.id == book_id), None)
+        return next((b for b in self.load_books() if b.book_id == book_id), None)
