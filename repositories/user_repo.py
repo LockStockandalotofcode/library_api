@@ -16,4 +16,4 @@ class UserRepository:
             json.dump(json_list, f, indent=2)
     
     def find_user_by_id(self, user_id: int) -> User | None:
-        return next((u for u in self.load_users() if u.id == user_id), None)
+        return next((u for u in self.load_users() if u.user_id == user_id), None)
