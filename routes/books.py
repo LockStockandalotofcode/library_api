@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
 from services.library_service import LibraryService
-from models.book import BookInput
+from models.book import Book
 
 router = APIRouter(prefix='/books', tags=["Books"])
 service = LibraryService()
@@ -17,9 +17,9 @@ def get_book(book_id: int):
         raise HTTPException(status_code=404, detail=str(e))
 
 @router.post("/")
-def add_book(book: BookInput):
+def add_book(book_data: Book):
     try:
-        return service.add_book(book.model_dump())
+        return service.add_book(book_data.model_dump())
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
 
