@@ -2,12 +2,8 @@ from pydantic import BaseModel
 from typing import Optional
 
 class Book(BaseModel):
-    book_id: int
+    book_id: Optional[int] = None
     title: str
-    author: Optional[str]
-    is_available: bool = True
+    author: Optional[str] = None
+    is_available: Optional[bool] = True
     due_date: Optional[str] = None
-
-class BookInput(BaseModel): # what the client sends
-    title: str
-    author: str
