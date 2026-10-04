@@ -3,7 +3,7 @@ from sqlmodel import Session, select
 
 class UserRepository:
     def __init__(self, session: Session):
-        self.session = Session
+        self.session = session
     
     def load(self) -> list[User]:
         return self.session.exec(select(User)).all()
