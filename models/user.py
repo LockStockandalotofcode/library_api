@@ -1,7 +1,6 @@
-from pydantic import BaseModel
 from typing import Optional
+from sqlmodel import SQLModel, Field
 
-class User(BaseModel):
-    user_id: int
+class User(SQLModel, table=True):
+    user_id: Optional[int] = Field(default=None, primary_key=True)
     name: str
-    borrowed_books: Optional[list] = []
