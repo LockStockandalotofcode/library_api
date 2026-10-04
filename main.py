@@ -1,10 +1,16 @@
 from fastapi import FastAPI
+from sqlmodel import SQLModel
 
+from database import engine
 from routes.books import router as books_router
 from routes.users import router as users_router
 from routes.borrowings import router as borrowings_router
 
 app = FastAPI(title="Library API")
+
+@app.on_event("startup")
+def on_startup():
+    SQLModel.metadata.create_all(engine)
 
 app.include_router(books_router)
 app.include_router(users_router)
