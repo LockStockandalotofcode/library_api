@@ -40,6 +40,14 @@ class LibraryService:
             raise ValueError(f"User {user_id} not found.")
         return user
 
+    def add_user(self, user_data: dict) -> User:
+        return self.user_repo.save(User(**user_data))
+
+    def remove_user(self, user_id: int) -> None:
+        user = self.get_user_by_id(user_id)
+        self.user_repo.delete(user)
+        return {"message": f"User {user_id} removed."}
+
     def get_user_borrowings(self, user_id: int) -> list[Borrowing]:
         # to validate user existence, in which case an empty list is not returned, instead execution stops as an exception or error is raised
         self.get_user_by_id(user_id)
