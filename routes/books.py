@@ -1,26 +1,32 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
+from sqlmodel import Session
+from database import get_session
 from services.library_service import LibraryService
 from models.book import Book
 
 router = APIRouter(prefix='/books', tags=["Books"])
-service = LibraryService()
 
 @router.get("/")
-def get_all_books():
-    return service.get_all_books()
+def get_all_books(session: Session = Depends(get_session)):
+    return LibraryService(session).get_all_books()
 
 @router.get("/{book_id}")
-def get_book(book_id: int):
+def get_book(book_id: int, session: Session = Depends(get_session)):
     try:
-        return service.get_book_by_id(book_id)
+        return LibraryService(session).get_book_by_id(book_id)
     except ValueError as e:
         raise HTTPException(status_code=404, detail=str(e))
 
 @router.post("/")
-def add_book(book_data: Book):
+def add_book(book_data: Book, session = Depends(get_session)):
     try:
-        return service.add_book(book_data.model_dump())
+        return LibraryService(session).add_book(book_data.model_dump(exclude={"book_id"}))
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
 
-    
+@router.delete("/{book_id}")
+def delete_book(book_id: int, session: Session = Depends(get_session)):
+    try: 
+        return LibraryService(session).remove_book(book_id)
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
