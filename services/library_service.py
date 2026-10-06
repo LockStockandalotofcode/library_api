@@ -3,7 +3,7 @@ from sqlmodel import Session, select
 from repositories.book_repo import BookRepository
 from repositories.user_repo import UserRepository
 from models.book import Book
-from models.user import User
+from models.user import User, UserCreate
 from models.borrowing import Borrowing
 
 class LibraryService:
@@ -40,8 +40,8 @@ class LibraryService:
             raise ValueError(f"User {user_id} not found.")
         return user
 
-    def add_user(self, user_data: dict) -> User:
-        return self.user_repo.save(User(**user_data))
+    def add_user(self, user_data: UserCreate) -> User:
+        return self.user_repo.save(user_data)
 
     def remove_user(self, user_id: int) -> None:
         user = self.get_user_by_id(user_id)
