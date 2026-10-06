@@ -1,4 +1,4 @@
-from models.user import User
+from models.user import User, UserCreate
 from sqlmodel import Session, select
 
 class UserRepository:
@@ -11,11 +11,12 @@ class UserRepository:
     def find_user_by_id(self, user_id: int) -> User | None:
         return self.session.get(User, user_id)
 
-    def save(self, user: User) -> User:
-        self.session.add(user)
+    def save(self, user: UserCreate) -> User:
+        db_user = User.model_validate(user)
+        self.session.add(db_user)
         self.session.commit()
-        self.session.refresh(user)
-        return user
+        self.session.refresh(db_user)
+        return db_user
 
     def delete(self, user: User) -> None:
         self.session.delete(user)
