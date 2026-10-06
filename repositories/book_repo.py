@@ -11,8 +11,11 @@ class BookRepository:
     def find_book_by_id(self, book_id: int) -> Book | None:
         return self.session.get(Book, book_id)
 
-    def save(self, book:BookCreate) -> Book:
-        db_book = Book.model_validate(book)
+    def save(self, book_data:BookCreate) -> Book:
+        if isinstance(book_data, Book):
+            db_book = book_data
+        else:
+            db_book = Book.model_validate(book_data)
         self.session.add(db_book)
         self.session.commit()
         self.session.refresh(db_book)
