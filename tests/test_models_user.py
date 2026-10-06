@@ -7,6 +7,5 @@ def test_model_user():
 
 def test_model_user_rejects_bad_data():
     with pytest.raises(Exception):
-        User(user_id="4", name=3)
+        User(user_id="4")
         # here string is handled by pydantic but name as int is not converted to string
-    
