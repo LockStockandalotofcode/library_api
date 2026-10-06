@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 from sqlmodel import Session, select
 from repositories.book_repo import BookRepository
 from repositories.user_repo import UserRepository
-from models.book import Book
+from models.book import Book, BookCreate
 from models.user import User, UserCreate
 from models.borrowing import Borrowing
 
@@ -22,8 +22,8 @@ class LibraryService:
             raise ValueError(f"Book {book_id} not found.")
         return book
 
-    def add_book(self, book_data: dict) -> Book:
-        return self.book_repo.save(Book(**book_data))
+    def add_book(self, book_data: BookCreate) -> Book:
+        return self.book_repo.save(book_data)
 
     def remove_book(self, book_id: int) -> dict:
         book = self.get_book_by_id(book_id)
