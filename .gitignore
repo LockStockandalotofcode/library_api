@@ -5,10 +5,11 @@ env/
 .DS_Store          
 *.log              
 data/              
+*.db
 
 *.pyc              
 __pycache__/
 *.py[cod]
 
 .vscode/
-.idea/
+.idea
