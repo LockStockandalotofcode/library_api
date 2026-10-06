@@ -32,7 +32,7 @@ def test_add_book(client, session):
                 "title": "Don Quixote",
                 "author": "Miguel de Cervantes"
             }) # json: the request body
-    assert response.status_code == 200
+    assert response.status_code == 201
     assert response.json()["title"] == "Don Quixote"
     
 def test_add_book_missing_field(client):
@@ -72,7 +72,7 @@ def test_get_user_not_found(client):
 
 def test_add_user(client):
     response = client.post("/users/", json={"name": "new user"})
-    assert response.status_code == 200
+    assert response.status_code == 201
     assert response.json()["name"] == "new user"
 
 def test_delete_user(client, session):
