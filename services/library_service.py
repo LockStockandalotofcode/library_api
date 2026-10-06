@@ -71,7 +71,6 @@ class LibraryService:
         due_date = (datetime.now() + timedelta(days=7)).strftime("%a %b %d %Y")
         book.is_available = False
         book.due_date = due_date
-        self.book_repo.save(book)
 
         self.session.add(Borrowing(book_id=book.book_id, user_id=user.user_id, due_date=due_date))
         self.session.commit()
@@ -82,7 +81,6 @@ class LibraryService:
         book = self.get_book_by_id(book_id)
         book.is_available = True
         book.due_date = None
-        self.book_repo.save(book)
         
         borrowing = self.session.exec(
             select(Borrowing).where(Borrowing.user_id == user_id, Borrowing.book_id == book_id)
