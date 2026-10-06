@@ -1,3 +1,4 @@
+from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from sqlmodel import SQLModel
 
@@ -6,11 +7,13 @@ from routes.books import router as books_router
 from routes.users import router as users_router
 from routes.borrowings import router as borrowings_router
 
-app = FastAPI(title="Library API")
 
-@app.on_event("startup")
-def on_startup():
+@asynccontextmanager
+async def lifespan(app: FastAPI):
     SQLModel.metadata.create_all(engine)
+    yield
+
+app = FastAPI(title="Library API", lifespan=lifespan)
 
 app.include_router(books_router)
 app.include_router(users_router)
