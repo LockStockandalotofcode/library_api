@@ -1,5 +1,5 @@
 from sqlmodel import Session, select
-from models.book import Book
+from models.book import Book, BookCreate
 
 class BookRepository:
     def __init__(self, session: Session):
@@ -11,11 +11,12 @@ class BookRepository:
     def find_book_by_id(self, book_id: int) -> Book | None:
         return self.session.get(Book, book_id)
 
-    def save(self, book:Book) -> Book:
-        self.session.add(book)
+    def save(self, book:BookCreate) -> Book:
+        db_book = Book.model_validate(book)
+        self.session.add(db_book)
         self.session.commit()
-        self.session.refresh(book)
-        return book
+        self.session.refresh(db_book)
+        return db_book
 
     def delete(self, book: Book) -> None:
         self.session.delete(book)
