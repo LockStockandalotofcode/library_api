@@ -1,3 +1,7 @@
+import os
+os.environ["DATABASE_URL"] = "sqlite:///:memory:"
+
+
 from fastapi.testclient import TestClient
 from main import app
 
@@ -8,11 +12,11 @@ def test_home_route():
     assert response.status_code == 200
     assert "Library API - Visit" in response.json()["message"]
 
-def test_books_router_is_registered():
+def test_books_router_is_registered(client):
     response = client.get("/books/")
     assert response.status_code != 404
     
-def test_users_router_is_registered():
+def test_users_router_is_registered(client):
     response = client.get("/users")
     assert response.status_code != 404
 
