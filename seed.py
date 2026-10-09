@@ -1,3 +1,6 @@
+import os
+os.environ["DATABASE_URL"] = "sqlite:///:memory:"
+
 from sqlmodel import SQLModel, Session, select
 from database import engine
 from models.book import Book
