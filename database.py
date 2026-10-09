@@ -1,12 +1,26 @@
+import os
 from sqlmodel import create_engine, Session
+from dotenv import load_dotenv
+from sqlmodel.pool import StaticPool
 
+
+load_dotenv()
 filename = "database.db"
-database_url = f"sqlite:///{filename}"
-connect_args = {"check_same_thread": False}
+DATABASE_URL = os.getenv("DATABASE_URL", default="sqlite:///./database.db")
+print(f"the current database is : {DATABASE_URL}")
+
+# postgres does not require this setting done manually
+connect_args = {}
+engine_kwargs = {}
+
+if DATABASE_URL.startswith("sqlite"):
+    connect_args = {"check_same_thread": False}
+    if ":memory:" in DATABASE_URL:
+        engine_kwargs["poolclass"] = StaticPool
 # allows fastapi to use same SQLite database in different threads, since one single request could use more then one thread
 # lets same connection used against Fastapi's async request handling
 
-engine = create_engine(database_url, connect_args=connect_args)
+engine = create_engine(DATABASE_URL, connect_args=connect_args, echo=True, **engine_kwargs)
 
 # get session is a generator, called on request
 def get_session():
