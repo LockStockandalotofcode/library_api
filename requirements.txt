@@ -4,3 +4,8 @@ pytest==9.1.1
 sqlmodel
 sqlalchemy
 psycopg2-binary
+Flask-RESTful
+flasgger
+uvicorn
+flask
+python-dotenv
