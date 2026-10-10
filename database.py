@@ -6,7 +6,8 @@ from sqlmodel.pool import StaticPool
 
 load_dotenv()
 filename = "database.db"
-DATABASE_URL = os.getenv("DATABASE_URL", default="sqlite:///./database.db")
+# DATABASE_URL = os.getenv("DATABASE_URL", default="sqlite:///./database.db")
+DATABASE_URL="postgresql://postgres:postgres0011@localhost:5432/library_db"
 print(f"\n\n\nthe current database is : {DATABASE_URL}\n\n\n")
 
 # postgres does not require this setting done manually
